@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список дел</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: blue;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-text {
+            font-weight: bold;
+        }
+        .task-date {
+            font-size: 0.8em;
+            color: gray;
+            margin-left: 20px;
+        }
+        a {
+            margin-left: 15px;
+            text-decoration: none;
+        }
+        .edit-link {
+            color: green;
+        }
+        .delete-link {
+            color: red;
+        }
+        button {
+            margin-top: 10px;
+            margin-right: 5px;
+            padding: 5px 10px;
+        }
+        .clear-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .clear-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <h1>Мои задачи</h1>
+    
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <div>
+                <span class="task-text">{{ task.text }}</span>
+                <span class="task-date">{{ task.date }}</span>
+            </div>
+            <div>
+                <a href="/edit/{{ loop.index0 }}" class="edit-link">Редактировать</a>
+                <a href="/delete/{{ loop.index0 }}" class="delete-link">Удалить</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Добавить задачу</h2>
+    <form method="POST" action="/add">
+        <input type="text" name="task" placeholder="Новая задача" required>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <form method="POST" action="/clear">
+        <button type="submit" class="clear-btn">Очистить всё</button>
+    </form>
+</body>
+</html>
